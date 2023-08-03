@@ -1,0 +1,105 @@
+<!-- tee_times.hbs -->
+<!-- Source from CS340 Starter Program: https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%205%20-%20Adding%20New%20Data -->
+<!-- Updated to our specific naming of objects and values. The rest of the file is from the link above. -->
+<header>
+<h1>Tee Times</h1>
+<p>A list of all the current Tee Times in the Database is listed below </p>
+</header>
+<main>
+    <section>
+<nav>
+    <a href="/" class="button-link">Home</body></a>
+    <a href="/golfers" class="button-link">Golfers</body></a>
+    <a href="/employees" class="button-link">Employees</body></a>
+    <a href="/sales" class="button-link">Sales</body></a>
+    <a href="/tee_times" class="button-link">Tee Times</body></a>
+    <a href="/golfers_has_tee_times" class="button-link">Golfers with Tee Times</body></a>
+</nav>
+    </section>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <section>
+{{!-- Create a table --}}
+<table id="tee_times-table">
+
+    {{!-- Header section --}}
+    <thead>
+
+        
+        <tr>
+            {{#each data.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+        </tr>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+
+        {{!-- For each row, print the id, party_size, tee_time_date, golfer_id, in order --}}
+        {{#each data}}
+        <tr data-value={{this.tee_time_id}}>  
+            <td>{{this.tee_time_id}}</td>
+            <td>{{this.party_size}}</td>
+            <td>{{this.tee_time_date}}</td>
+            <td>{{this.golfer_id}}</td>
+            <td><button onclick="deleteTeeTime({{this.tee_time_id}})">Delete Tee Time</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+<script src="./js/delete_tee_time.js"></script>
+    </section>
+
+<fieldset>
+{{!-- Form to add a record to the table  --}}
+<h2>Add a New Tee Time</h2>
+<p>To add a new tee time, please enter the information below and click 'Submit Tee Time'!</p>
+<form id="add-tee_time-form-ajax">
+
+    <label for="input-golfer_id">Golfer: </label>
+    <select name="input-golfer_id" id="input-golfer_id">
+        <option value="test">Select a Golfer</option>
+        {{#each Golfers}}
+        <option value="{{this.golfer_id}}">{{this.first_name}} {{this.last_name}}</option>
+        {{/each}}
+    </select>
+
+    <label for="input-party_size">Party Size: </label>
+    <input type="number" min="2" max="5" name="input-party_size" id="input-party_size">
+
+    <label for="input-tee_time_date">Tee Time: </label>
+    <input type="datetime-local" name="input-tee_time_date" id="input-tee_time_date">
+
+    <input type="submit">
+</form>
+
+{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+<script src="./js/add_tee_time.js"></script>
+</fieldset>
+
+<fieldset>
+<h2>Update An Existing Tee Time</h2>
+<p>To update a Tee Times Date, Time, or Party Size</p>
+<form id="update-tee_time-form-ajax">
+
+    <label for="input-tee_time_id">Tee Time ID: </label>
+    <select name="input-tee_time_id" id="tee_timeSelect">
+        <option value="test">Select an Existing Tee Time by ID</option>
+        {{#each data}}
+        <option value="{{this.tee_time_id}}">{{this.tee_time_id}}</option>
+        {{/each}}
+    </select>
+
+    <label for="input-tee_time_date">Date and Time: </label>
+    <input type="datetime-local" name="input-tee_time_date" id="input-tee_time_date-update">
+
+    <label for="input-party_size">Party Size: </label>
+    <input type="number" name="input-party_size" id="input-party_size-update">
+
+    <input type="submit">
+</form>
+
+<script src="./js/update_tee_time.js"></script>
+</fieldset>

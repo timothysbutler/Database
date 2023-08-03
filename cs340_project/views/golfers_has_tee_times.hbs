@@ -1,0 +1,76 @@
+<!-- golfers_has_tee_times.hbs -->
+<!-- Source from CS340 Starter Program: https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%205%20-%20Adding%20New%20Data -->
+<!-- Updated to our specific naming of objects and values. The rest of the file is from the link above. -->
+<header>
+<h1>Golfers With Tee Times</h1>
+<p>A list of all the current Golfers who have Tee Times in the Database is listed below </p>
+</header>
+<main>
+    <section>
+<nav>
+    <a href="/" class="button-link">Home</body></a>
+    <a href="/golfers" class="button-link">Golfers</body></a>
+    <a href="/employees" class="button-link">Employees</body></a>
+    <a href="/sales" class="button-link">Sales</body></a>
+    <a href="/tee_times" class="button-link">Tee Times</body></a>
+    <a href="/golfers_has_tee_times" class="button-link">Golfers with Tee Times</body></a>
+</nav>
+    </section>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <section>
+{{!-- Create a table --}}
+<table id="golfers_has_tee_times-table">
+
+    {{!-- Header section --}}
+    <thead>
+
+        
+        <tr>
+            {{#each data.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+        </tr>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+
+        {{!-- For each row, print the First Name, Last Name, Tee Time Date and Time in order --}}
+        {{#each data}}
+        <tr data-value={{this.golfers_golfer_id}}>  
+            <td>{{this.First}}</td>
+            <td>{{this.Last}}</td>
+            <td>{{this.Tee_Time}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+</section>
+
+<fieldset>
+{{!-- Form to add a record to the table  --}}
+<h2>Manually Enter Data</h2>
+<p>Data will be added from Tee Times Add Tee Time Form, this is only to manually add data</p>
+<form id="add-golfer_has_tee_times-form-ajax">
+
+
+    <label for="input-golfer_id">Golfer: </label>
+    <select name="input-golfer_id" id="input-golfer_id">
+        <option value="test">Select a Golfer</option>
+        {{#each Golfers}}
+        <option value="{{this.golfer_id}}">{{this.first_name}} {{this.last_name}}</option>
+        {{/each}}
+    </select>
+
+    <label for="input-tee_time_date">Tee Time: </label>
+    <input type="datetime-local" name="input-tee_time_date" id="input-tee_time_date">
+
+    <input type="submit">
+</form>
+
+{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+<script src="./js/add_golfer_has_tee_times.js"></script>
+</fieldset>
+
